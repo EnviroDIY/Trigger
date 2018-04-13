@@ -5,14 +5,15 @@
 //TripValue is value which when exceeded, the pin changes polarity, OutputPin is the pin which is switched,
 //NumVals are the number of average samples taken, Polarity is the value which should be present when triggered (1 for HIGH, 0 for LOW)
 //
-Trigger::Trigger(float _TripValue, int _OutputPin, int _NumVals, int _Polarity, int _PulseLength) { 
+Trigger::Trigger(float _TripValue, int _OutputPin, int _NumVals, int _Polarity, char _Mode, int _PulseLength) { 
 	TripValue = _TripValue;
 	OutputPin = _OutputPin;
 	NumVals = _NumVals;
 	Polarity = _Polarity;
 	TriggeredValue = Polarity;  //Set triggerd value based on polarity
 	IdleValue = 1 - Polarity;  //Set idle value to opposite of triggerd value
-	PulseLength = _PulseLength; 
+	PulseLength = _PulseLength; //Copy pulse length
+	Mode = _Mode; //Set global mode, either '<' or '>'
 }
 
 void Trigger::begin() {
@@ -24,20 +25,40 @@ bool Trigger::test(float Val) {
 	static bool TripStatus = false; //Used to see if device has been tripped or not
 	static int Count = 0;
 
-	if(Val > TripValue && TripStatus == false) {  //trip value, device idle
-		Count++;  //Increment count of trip values
+	if(Mode == '>') {  //Trigger on greater than
+		if(Val > TripValue && TripStatus == false) {  //trip value, device idle
+			Count++;  //Increment count of trip values
+		}
+
+		else if(Val < TripValue && TripStatus == false) {  //idle value, device idle
+			Count = 0;  //Clear count if you get a single bad value before you have been tripped
+		}
+
+		else if(Val < TripValue && TripStatus == true) {  //idle value, device tripped
+			Count--; //Decrement count if you get a bad value but the device is already tripped
+		}
+
+		else if(Val > TripValue && TripStatus == true) {  //trip value, device tripped
+			//Do nothing in this call
+		}
 	}
 
-	else if(Val < TripValue && TripStatus == false) {  //idle value, device idle
-		Count = 0;  //Clear count if you get a single bad value before you have been tripped
-	}
+	if(Mdoe == '<') {  //Trigger on less than
+		if(Val < TripValue && TripStatus == false) {  //trip value, device idle
+			Count++;  //Increment count of trip values
+		}
 
-	else if(Val < TripValue && TripStatus == true) {  //idle value, device tripped
-		Count--; //Decrement count if you get a bad value but the device is already tripped
-	}
+		else if(Val > TripValue && TripStatus == false) {  //idle value, device idle
+			Count = 0;  //Clear count if you get a single bad value before you have been tripped
+		}
 
-	else if(Val > TripValue && TripStatus == true) {  //trip value, device tripped
-		//Do nothing in this call
+		else if(Val > TripValue && TripStatus == true) {  //idle value, device tripped
+			Count--; //Decrement count if you get a bad value but the device is already tripped
+		}
+
+		else if(Val < TripValue && TripStatus == true) {  //trip value, device tripped
+			//Do nothing in this call
+		}
 	}
 
 	if(Count >= NumVals && TripStatus == false) {
