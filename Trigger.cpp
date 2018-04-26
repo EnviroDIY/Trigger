@@ -5,7 +5,7 @@
 //TripValue is value which when exceeded, the pin changes polarity, OutputPin is the pin which is switched,
 //NumVals are the number of average samples taken, Polarity is the value which should be present when triggered (1 for HIGH, 0 for LOW)
 //
-Trigger::Trigger(float _TripValue, int _OutputPin, int _NumVals, int _Polarity, char _Mode, int _PulseLength) { 
+Trigger::Trigger(float _TripValue, int _OutputPin, int _NumVals, int _Polarity, char _Mode, int _PulseLength) {
 	TripValue = _TripValue;
 	OutputPin = _OutputPin;
 	NumVals = _NumVals;
@@ -43,7 +43,7 @@ bool Trigger::test(float Val) {
 		}
 	}
 
-	if(Mdoe == '<') {  //Trigger on less than
+	if(Mode == '<') {  //Trigger on less than
 		if(Val < TripValue && TripStatus == false) {  //trip value, device idle
 			Count++;  //Increment count of trip values
 		}
@@ -73,10 +73,10 @@ bool Trigger::test(float Val) {
 }
 
 bool Trigger::test(int Val) {  //Overload to define test for integer values as well
-	return test(float(Val));  //Inneficient coding, but simple to read, FIX later?? 
+	return test(float(Val));  //Inneficient coding, but simple to read, FIX later??
 }
 
-void Trigger::initOutput() {  //Moddify this function to setup whatever output is desired 
+void Trigger::initOutput() {  //Moddify this function to setup whatever output is desired
 	pinMode(OutputPin, OUTPUT);
 	digitalWrite(OutputPin, IdleValue); //Set pin to the "off" state
 }
@@ -88,7 +88,7 @@ void Trigger::triggerOutput(bool Status) {  //Moddify this function to either se
 		else pulse(OutputPin, PulseLength);
 	}
 	else {	//Idle output, place moddified code inside
-		if(PulseLength == 0) digitalWrite(OutputPin, IdleValue);  //Only do anything for non-pulse 
+		if(PulseLength == 0) digitalWrite(OutputPin, IdleValue);  //Only do anything for non-pulse
 	}
 }
 
