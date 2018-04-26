@@ -25,6 +25,9 @@ bool Trigger::test(float Val) {
 	static bool TripStatus = false; //Used to see if device has been tripped or not
 	static int Count = 0;
 
+	if(Val == -9999) return TripStatus; //If a non valid value is passed, simply break out of test function
+	//designed for use with EnviroDIY Modular sensor library convention
+
 	if(Mode == '>') {  //Trigger on greater than
 		if(Val > TripValue && TripStatus == false) {  //trip value, device idle
 			Count++;  //Increment count of trip values
