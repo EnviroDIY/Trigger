@@ -289,7 +289,7 @@ const int8_t VoltPower = 22;  // Pin to switch power on and off (-1 if unconnect
 const int8_t VoltData = 0;  // The data pin ON THE ADS1115 (NOT the Arduino Pin Number)
 const uint8_t Volt_ADS1115Address = 0x48;  // The I2C address of the ADS1115 ADC
 const uint8_t VoltReadsToAvg = 1; //Only read one sample
-const float VoltGain = 10; //Default 1/gain for grove voltage divider is 10x 
+const float VoltGain = 10; //Default 1/gain for grove voltage divider is 10x
 ExternalVoltage extvolt(VoltPower, VoltData, Volt_ADS1115Address, VoltReadsToAvg, VoltGain);
 
 // ==========================================================================
@@ -303,7 +303,7 @@ const uint8_t VolumePerTipEvent = 0.2; //0.2mm of rain per tip event
 TippingBucket tip(TippingPower, TippingBucketAddress, TipsToAverage, VolumePerTipEvent);
 
 // ==========================================================================
-//    External Trigger 
+//    External Trigger
 // ==========================================================================
 #include <Trigger.h>
 const int8_t TriggerPin = 5;  // Pin to switch power on and off (-1 if unconnected)
@@ -312,7 +312,7 @@ const int8_t NumberOfSamples = 3; //The number of consecutive samples which must
 const int Polarity = 1; //sets the polarity of the output value, 1 means active high, 0 is active low
 const char Mode = '<'; //Sets the mode of operation to test for a value less than the threshold
 const int PulseLength = 1000; //Triggers a pulse with a length of 1000 ms when trigger is activated, set to 0 for simple toggle
-Trigger trig(Threshold, TriggerPin, NumberOfSamples, Polarity, Mode, PulseLength);
+Trigger trigger(Threshold, TriggerPin, NumberOfSamples, Polarity, Mode, PulseLength);
 
 
 // ==========================================================================
@@ -441,7 +441,7 @@ void setup()
     logger.checkForTestingMode(buttonPin);
 
     // Begin the trigger function
-    trig.begin();
+    trigger.begin();
 
 }
 
@@ -453,5 +453,8 @@ void loop()
 {
     // Log the data
     logger.log();
-    trip.test((*variableList[37]).getValue()); //Test if trip value has been triggerd by the conductivity probe (sensor #37 in the variable array)
+
+    //Test if trip value has been triggered by fetching variable from variable array,
+    //NOTE: The `variableList` is 0 indexed, with the first record having an index = 0, the second record having an index = 1, etc.
+    trigger.test((*variableList[36]).getValue()); //Test if trip value has been triggerd by the conductivity probe (sensor #37 in the variable array)
 }
