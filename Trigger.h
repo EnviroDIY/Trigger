@@ -1,13 +1,14 @@
 /*
- *Tigger.h
+ *Trigger.h
  *This file is part of the EnviroDIY modular sensors library for Arduino
  *
  *Initial library developement done by Bobby Schulz (schu3119@umn.edu)
+ *							 Anthony Aufdenkampe (aaufdenkampe@limno.com)
  *
- *This library is used to setup and external trigger function, based on the values of a sensor, an output pin can be
+ *This library is used to setup an external trigger function, based on the values of a sensor, an output pin can be
  triggered to either flip high/low, or simply trigger a pulse whenever that value condition is triggered
- The library is made to operate on highly volitile signals, it requires n number of readings to be above or below the trigger
- value before it trips, thus reducing the posibility of a erronious triggering event 
+ * The library is made to operate on highly volatile signals, it requires n number of readings to be above or below the trigger
+ value before it trips, thus reducing the possibility of a erroneous triggering event
 */
 
 #ifndef Trigger_h
@@ -22,7 +23,7 @@ public:
 	void begin();
 	bool test(float Val);
 	bool test(int Val);
-	
+
 private:
 	float TripValue;
 	int OutputPin;
@@ -30,8 +31,8 @@ private:
 	int Polarity;
 	int TriggeredValue = HIGH;
 	int IdleValue = LOW;
-	int PulseLength; 
-	char Mode; 
+	int PulseLength;
+	char Mode;
 	void initOutput();
 	void triggerOutput(bool Status);
 	void pulse(int Pin, int Period);
