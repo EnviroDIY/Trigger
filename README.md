@@ -7,7 +7,7 @@ The library can operate on highly volatile signals because it allows the user to
 
 To add a trigger to your Arduino sketch (`*.ino` file), you need to add a "Constructor" block of code above the setup function then add a "Test" block of code in the loop() to test new values versus the threshold value.
 
-### Constructor block of code above the setup function
+### Construct Trigger object above the `setup()` function
 Below is example code that can be universally applied to any `*.ino` file, where the constructor accepts the following arguments:
 
 - ***Threshold*** or ***TripValue*** is the value which when crossed, the output pin switches polarity or delivers a pulse.
@@ -31,11 +31,21 @@ const int PulseLength = 3000; //Triggers a pulse with a set length of millisecon
 Trigger trigger(TripValue, TriggerPin, NumberOfSamples, Polarity, Mode, PulseLength);
 ```
 
+### Begin Trigger function in the `setup()` function block
+Place this line of code somewhere in the `setup()` function block.
+```c++
+trigger.begin();  //Setup trigger function
+```
 
-### Test block of code for the loop()
+### Test Trigger function in the `loop()` function block
 To test new values versus the threshold value.
-This example code is designed for use with the [EnviroDIY ModularSensors](https://github.com/EnviroDIY/ModularSensors) library (examples such as `logging_to_EnviroDIY.ino` or `simple_logging`). For a complete example, see https://github.com/EnviroDIY/Trigger/tree/master/examples/simple_logging.
+This is an example of the most basic requirement.
+```c++
+trigger.test(triggerTestValue); // Have the trigger function run a test using the input from the last 3 values of `triggerTestValue`
 
+```
+
+This example code is designed for use with the [EnviroDIY ModularSensors](https://github.com/EnviroDIY/ModularSensors) library (examples such as `logging_to_EnviroDIY.ino` or `simple_logging`). For a complete example, see https://github.com/EnviroDIY/Trigger/tree/master/examples/simple_logging.
 ```c++
 // Trigger function: Test if value of selected variable passes threshold
 Serial.print(F("Triggering on "));
