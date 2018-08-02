@@ -3,7 +3,8 @@ This latching contact closure switch was specifically designed to *Inhibit* and 
 
 This design utilizes two connected [Pololu Mini Pushbutton Power Switch LV](https://www.pololu.com/product/2808) boards ($3.95 each), wired in a clever way modified from an [original design by Bobby Schulz](https://github.com/EnviroDIY/Trigger/blob/master/hardware/ISCO-Mayfly-Trigger/BobbbyOriginalDesign_ISCO_Trigger_5-4-2018.pdf).
 
-### Description of latching contact closure setup
+
+## Description of latching contact closure setup
 
 **Figure 1** shows the complete setup, with the Mayfly connected to the grove ports on the left and the ISCO connected on the right via the ISCO's white (pin B) common/ground wire and the ISCO's red (pin F) inhibit wire.
 
@@ -26,7 +27,7 @@ Figure 2 Notes, with description of hardware behavior:
   - NOTE: Switch 2 will only automatically turn ON (when Switch 1 turns OFF) if there is a positive float voltage (>1V) applied to CTRL, such as when wired to a powered ISCO (which floats at 5V).
   
 
-### Instructions for use with ISCO
+## Instructions for use with ISCO
   
 Configure ISCO
 - Configuration is all “defaults” (i.e. “NO” for all Enable Pin settings)
@@ -52,7 +53,7 @@ Un-Inhibit ISCO, to let program run
   - A user can manually PAUSE a program by toggling Switch 1 ON in the middle of a program run, however, the ISCO will only display "Sampler Inhibited" when it is time to fill the next bottle.
 
  
-### Developer Notes
+## Developer Notes
 
 I discovered through trial and error that the floating voltage of ISCO Pin F:
 - dropped from 4.95V to 1.96V when connected to the CTRL pin of Switch 2 (while Switch 2 is ON)
