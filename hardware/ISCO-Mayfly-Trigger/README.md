@@ -21,14 +21,14 @@ Figure 1 Notes:
 
 Figure 2 Notes, with description of hardware behavior:
 - Switch 1 is manually set to ON using the pushbutton and indicated by the red LED light glowing. The Mayfly turns Switch 1 OFF by sending a 3.3V pulse to the OFF pin (shown here via the white wire).
-- Switch 2 is turned OFF when Switch 1 is turned ON, via a connection from Switch 1 Vout to Switch 2 OFF pins (shown here via the yellow wire). 
+- Switch 2 is turned OFF when Switch 1 is turned ON, via a connection from Switch 1 Vout to Switch 2 OFF pins (shown here via the yellow wire).
   - When Switch 2 is OFF, its CTRL pin is grounded, which when wired to ISCO Pin F (red wire in pigtail connector) will ***Inhibit*** the ISCO program from running.
-  - When Switch 2 is ON, its CTRL pin floats, which when wired to ISCO Pin F with an ***inline 5.1k ohm resistor*** (faintly visible here within the shown red crimp connector), will *un-inhibit* the ISCO program, letting it run. 
+  - When Switch 2 is ON, its CTRL pin floats, which when wired to ISCO Pin F with an ***inline 5.1k ohm resistor*** (faintly visible here within the shown red crimp connector), will *un-inhibit* the ISCO program, letting it run.
   - NOTE: Switch 2 will only automatically turn ON (when Switch 1 turns OFF) if there is a positive float voltage (>1V) applied to CTRL, such as when wired to a powered ISCO (which floats at 5V).
-  
+
 
 ## Instructions for use with ISCO
-  
+
 Configure ISCO
 - Configuration is all “defaults” (i.e. “NO” for all Enable Pin settings)
   - Except: set Start Time Delay = 0 min
@@ -52,7 +52,7 @@ Un-Inhibit ISCO, to let program run
 - NOTE: Switch 1 must remain OFF for the entire Sampling Program to complete filling all bottles
   - A user can manually PAUSE a program by toggling Switch 1 ON in the middle of a program run, however, the ISCO will only display "Sampler Inhibited" when it is time to fill the next bottle.
 
- 
+
 ## Developer Notes
 
 I discovered through trial and error that the floating voltage of ISCO Pin F:
@@ -62,7 +62,7 @@ I discovered through trial and error that the floating voltage of ISCO Pin F:
 
 I found that I had to insert a 5.1k ohm resistor inline with ISCO Pin F (red wire) to properly Inhibit and un-Inhibit the ISCO. Here are results from my trial and error tests.
 
-| Pin F inline resistor (kOhm) | Pin F Volts when OFF | Re-Inhibit ISCO? | Pin F Volts when ON | Trigger ISCO? |
+| Pin F inline resistor (kOhm) | Pin F Volts when OFF | Inhibit ISCO? | Pin F Volts when ON | Trigger ISCO? |
 | --- | --- | --- | --- | --- |
 | none | 0.018 | YES | 1.96 | NO |
 | 3.3 | 1.260 | YES | 2.535 | NO |
@@ -70,5 +70,7 @@ I found that I had to insert a 5.1k ohm resistor inline with ISCO Pin F (red wir
 | 5.1 | 1.706 |  YES |2.766 | YES |
 | 6.8 | 2.042 | NO | 2.945 | YES |
 | 10 | 2.525 | NO | 3.25 | YES |
+
+NOTE that I could have also used a 4.7k ohm resistor.
 
 I also found that if I inserted my own 5V pullup to this circuit, to get a clean jump from 0V to 5V, that it didn't trigger the ISCO. In other words, I really needed it to passively "float".
