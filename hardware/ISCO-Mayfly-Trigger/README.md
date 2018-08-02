@@ -61,9 +61,10 @@ I discovered through trial and error that the floating voltage of ISCO Pin F:
 
 I found that I had to insert a 5.1k ohm resistor inline with ISCO Pin F (red wire) to properly Inhibit and un-Inhibit the ISCO. Here are results from my trial and error tests.
 
-| Pin F inline resistor (kOhm) | Pin F Volts when OFF | Pin F Volts when ON | Trigger ISCO? | Re-Inhibit ISCO? |
-| none | 0.018 | YES | 1.96 | NO |  
-| 3.3 | 1.260 | YES | 2.535 | NO | 
+| Pin F inline resistor (kOhm) | Pin F Volts when OFF | Re-Inhibit ISCO? | Pin F Volts when ON | Trigger ISCO? |
+| --- | --- | --- | --- | --- |
+| none | 0.018 | YES | 1.96 | NO |
+| 3.3 | 1.260 | YES | 2.535 | NO |
 | 4.7 | 1.536 | YES | 2.678 | YES |
 | 5.1 | 1.706 |  YES |2.766 | YES |
 | 6.8 | 2.042 | NO | 2.945 | YES |
