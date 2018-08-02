@@ -26,7 +26,7 @@ Figure 2 Notes, with description of hardware behavior:
   - NOTE: Switch 2 will only automatically turn ON (when Switch 1 turns OFF) if there is a positive float voltage (>1V) applied to CTRL, such as when wired to a powered ISCO (which floats at 5V).
   
 
-  ### Instructions for use with ISCO
+### Instructions for use with ISCO
   
 Configure ISCO
 - Configuration is all “defaults” (i.e. “NO” for all Enable Pin settings)
