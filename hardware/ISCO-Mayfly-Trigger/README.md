@@ -74,3 +74,6 @@ I found that I had to insert a 5.1k ohm resistor inline with ISCO Pin F (red wir
 NOTE that I could have also used a 4.7k ohm resistor.
 
 I also found that if I inserted my own 5V pullup to this circuit, to get a clean jump from 0V to 5V, that it didn't trigger the ISCO. In other words, I really needed it to passively "float".
+
+2019-04-18 UPDATE: @gcutrell found this Campbell Scientific manual that describes their [10164-L Sampler Control
+Cable for use with Isco and Sigma Autosamplers](https://s.campbellsci.com/documents/af/manuals/10164.pdf), which might be valuable additional documentation worth exploring for future developments.
